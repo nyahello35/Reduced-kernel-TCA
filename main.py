@@ -66,8 +66,6 @@ mdl2.fit(Xs_rtca,Ys)
 Yt_pred_rtca = mdl2.predict(Xt_rtca)
 acc2 = (np.array([np.sum(Yt_pred_rtca == Yt) / (ntp+ntn)]))
 
-plt.plot(test_mu,acc2)
-plt.show()
 
 if plot == 1:
     for data, m, c in [(Xsp_rtca,'o','r'),(Xsn_rtca,'x','r'),(Xtp_rtca,'o','b'),(Xtn_rtca,'x','b')]:
