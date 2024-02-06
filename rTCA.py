@@ -3,7 +3,7 @@ import math
 from numpy.linalg import eig, norm, inv
 
 
-def rTCA(training_input, testing_input, mu, sigma, kernel, dim, r):
+def rTCA(training_input, testing_input, mu, sigma, kernel, dim, proportion, r):
     n_training_input = training_input.shape[0]
     n_testing_input = testing_input.shape[0]
     n_total = n_training_input + n_testing_input
@@ -11,7 +11,7 @@ def rTCA(training_input, testing_input, mu, sigma, kernel, dim, r):
     total_input = np.vstack((training_input,testing_input))
     # Randomly select the subset
     rng = np.random.default_rng(r)
-    nSubset = int(n_total/10)
+    nSubset = int(n_total*proportion)
     index = rng.permutation(np.arange(n_total))[0:nSubset]
     sub_input = total_input[index]
     # Construct kernel matrix
