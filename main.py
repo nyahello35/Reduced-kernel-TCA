@@ -54,9 +54,8 @@ acc1 = np.sum(Yt_pred == Yt) / (ntp+ntn)
 print(acc1)
 
 # rTCA
-test_mu = np.linspace(0,1,10)
 acc2 = []
-Xs_rtca, Xt_rtca = rTCA(Xs,Xt,test_mu[i],sigma,kernel,dim,proportion,r)
+Xs_rtca, Xt_rtca = rTCA(Xs,Xt,mu_rtca,sigma,kernel,dim,proportion,r)
 Xsp_rtca = Xs_rtca[0:nsp]
 Xsn_rtca = Xs_rtca[nsp+1:]
 Xtp_rtca = Xt_rtca[0:ntp]
