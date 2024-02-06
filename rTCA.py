@@ -1,9 +1,26 @@
+#This module contains the rTCA algorithm.
+# ||Parameter description||
+# training_input: The input data of source dataset. Must be a (n,d) array, where n is the number of data, d is the dimension of the features.
+
+# testing_input: The input data of target dataset. Must be a (m,d) array, where m is the number of data, d is the dimension of the features.
+
+# mu: A non-negative trade-off parameter. Note that this parameter is sensetive to the result. I suggest that set mu = 1 at first. Then observe the result of a small interval for mu around 1 and choose the best mu.
+
+# sigma: A parameter for the gaussian rbf kernel. If the linear kernel is chosen, this parameter will not affect the result.
+
+# kernel: Choose whcih kernel function will be used. 'linear' is for linear kernel i.e inner product; 'rbf' is for gaussian rbf kernel.
+
+# dim: The dimension of features after transformed by rTCA.
+
+# ratio: The ratio of the reduced dataset to full dataset. If setting ratio = 1, this function becomes the TCA algorithm.
+
+# r: The seed for randomly selecting the reduced dataset.
 import numpy as np
 import math
 from numpy.linalg import eig, norm, inv
 
 
-def rTCA(training_input, testing_input, mu, sigma, kernel, dim, proportion, r):
+def rTCA(training_input, testing_input, mu, sigma, kernel='linear', dim=2, ratio=0.1, r=1):
     n_training_input = training_input.shape[0]
     n_testing_input = testing_input.shape[0]
     n_total = n_training_input + n_testing_input
@@ -11,7 +28,7 @@ def rTCA(training_input, testing_input, mu, sigma, kernel, dim, proportion, r):
     total_input = np.vstack((training_input,testing_input))
     # Randomly select the subset
     rng = np.random.default_rng(r)
-    nSubset = int(n_total*proportion)
+    nSubset = int(n_total*ratio)
     index = rng.permutation(np.arange(n_total))[0:nSubset]
     sub_input = total_input[index]
     # Construct kernel matrix
