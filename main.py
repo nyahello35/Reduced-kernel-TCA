@@ -16,7 +16,7 @@ nsp = 100
 nsn = 100
 ntp = 100
 ntn = 100
-plot = 0
+plot = 1
 # Parameter for rTCA
 mu_rtca = 0.1
 sigma = 1
