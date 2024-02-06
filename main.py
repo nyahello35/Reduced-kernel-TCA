@@ -22,6 +22,7 @@ mu_rtca = 0.1
 sigma = 1
 kernel = 'linear'
 dim = 2
+proportion = 0.1
 r = 1
 
 # Generate 3-dimensional data with datasets shift
@@ -51,21 +52,20 @@ mdl1.fit(Xs,Ys)
 Yt_pred = mdl1.predict(Xt)
 acc1 = np.sum(Yt_pred == Yt) / (ntp+ntn)
 print(acc1)
-# PCA
+
 # rTCA
 test_mu = np.linspace(0,1,10)
 acc2 = []
-for i in np.arange(10):
-    Xs_rtca, Xt_rtca = rTCA(Xs,Xt,test_mu[i],sigma,kernel,dim,r)
-    Xsp_rtca = Xs_rtca[0:nsp]
-    Xsn_rtca = Xs_rtca[nsp+1:]
-    Xtp_rtca = Xt_rtca[0:ntp]
-    Xtn_rtca = Xt_rtca[ntp+1:]
-    mdl2 = SVC(gamma='auto')
-    mdl2.fit(Xs_rtca,Ys)
+Xs_rtca, Xt_rtca = rTCA(Xs,Xt,test_mu[i],sigma,kernel,dim,proportion,r)
+Xsp_rtca = Xs_rtca[0:nsp]
+Xsn_rtca = Xs_rtca[nsp+1:]
+Xtp_rtca = Xt_rtca[0:ntp]
+Xtn_rtca = Xt_rtca[ntp+1:]
+mdl2 = SVC(gamma='auto')
+mdl2.fit(Xs_rtca,Ys)
 
-    Yt_pred_rtca = mdl2.predict(Xt_rtca)
-    acc2.extend(np.array([np.sum(Yt_pred_rtca == Yt) / (ntp+ntn)]))
+Yt_pred_rtca = mdl2.predict(Xt_rtca)
+acc2 = (np.array([np.sum(Yt_pred_rtca == Yt) / (ntp+ntn)]))
 
 plt.plot(test_mu,acc2)
 plt.show()
